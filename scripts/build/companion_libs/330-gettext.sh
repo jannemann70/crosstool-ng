@@ -54,6 +54,23 @@ do_gettext_for_host() {
     CT_EndStep
 }
 
+# Build gettext for running on target
+do_gettext_for_target() {
+    local -a gettext_opts
+
+    CT_DoStep INFO "Installing gettext for target"
+    CT_mkdir_pushd "${CT_BUILD_DIR}/build-gettext-target-${CT_TARGET}"
+
+    gettext_opts+=( "host=${CT_HOST}" )
+    gettext_opts+=( "prefix=${CT_TARGET_COMPLIBS_DIR}" )
+    gettext_opts+=( "cflags=${CT_CFLAGS_FOR_TARGET}" )
+    gettext_opts+=( "ldflags=${CT_LDFLAGS_FOR_TARGET}" )
+    do_gettext_backend "${gettext_opts[@]}"
+
+    CT_Popd
+    CT_EndStep
+}
+
 # Build gettext
 #     Parameter     : description               : type      : default
 #     host          : machine to run on         : tuple     : (none)

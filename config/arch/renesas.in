@@ -1,0 +1,34 @@
+# Renesas specific config options
+
+## no-package
+## select ARCH_SUPPORTS_32
+## select ARCH_DEFAULT_32
+## select ARCH_REQUIRES_MULTILIB
+##
+## help Renesas microcontrollers:
+## help     http://www.renesas.com
+
+
+config ARCH_CONTROLLER
+    string
+    default "m32c"  if ARCH_CONTROLLER_M32C
+    default "rx"    if ARCH_CONTROLLER_RX
+
+choice
+    bool
+    prompt "Select uC family"
+    default ARCH_CONTROLLER_M32C
+
+config ARCH_CONTROLLER_M32C
+    bool
+    prompt "m32c"
+    help
+      M16C/M32C microcontroller family.
+
+config ARCH_CONTROLLER_RX
+    bool
+    prompt "rx"
+    help
+      RX microcontroller family.
+
+endchoice
